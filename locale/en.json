@@ -1,0 +1,7 @@
+{
+  "meta": {
+    "title": "WeNeed adapter",
+    "description": "Adds a delegating model provider that prefixes each new request with a WeNeed register seed, so the model keeps planning in \"We need / Need / We should\" instead of drifting back to \"Let me\". No proxy process and no port.",
+    "detail": "docs/DETAIL.md"
+  }
+}

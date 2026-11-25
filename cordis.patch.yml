@@ -1,0 +1,55 @@
+# WeNeed 适配器 bundle
+#
+# 两种工作模式，二选一：
+#
+#   A) channel:        内置传输 —— 插件自己发请求，不依赖任何已有 provider。
+#                      玩家只填 channel + 密钥，就能用。（推荐）
+#
+#   B) sourceProvider: 委托 —— 把请求转交给 DSH 里已注册的 provider。
+#                      适合「那个渠道已经由别的插件配好了」的情况。
+#
+# 渠道 id 见 channels.js，常用：
+#   opencode-go    OpenCode Go     https://opencode.ai/zen/go/v1
+#   opencode-zen   OpenCode Zen    https://opencode.ai/zen/v1
+#   deepseek       DeepSeek 官方   https://api.deepseek.com
+#   zhipu          智谱 GLM        https://open.bigmodel.cn/api/paas/v4
+#   moonshot       Kimi            https://api.moonshot.cn/v1
+#   dashscope      阿里通义        https://dashscope.aliyuncs.com/compatible-mode/v1
+#   volces         火山方舟/豆包   https://ark.cn-beijing.volces.com/api/v3
+#   siliconflow    硅基流动        https://api.siliconflow.cn/v1
+#   minimax        MiniMax         https://api.minimax.chat/v1
+#   hunyuan        腾讯混元        https://api.hunyuan.cloud.tencent.com/v1
+#   qianfan        百度千帆        https://qianfan.baidubce.com/v2
+#   stepfun        阶跃星辰        https://api.stepfun.com/v1
+#   lingyi         零一万物        https://api.lingyiwanwu.com/v1
+#   openrouter     OpenRouter      https://openrouter.ai/api/v1
+#   custom         自定义（自己填 baseURL）
+#
+# 密钥解析顺序：config.apiKey → 环境变量 config.apiKeyEnv → ~/.dsh/.credentials.yaml 同名 ref
+# 下面预填的是 OpenCode Go。换渠道只改 channel 一行 + models。
+
+- insert:
+    - id: weneed-adapter
+      name: 'dsh-weneed-adapter'
+      config:
+        channel: opencode-go
+        displayName: '[WeNeed] OpenCode Go'
+        mode: always
+        debug: false
+        models:
+          - id: deepseek-v4.1-flash
+            name: DeepSeek V4.1 Flash (WeNeed)
+            contextWindow: 1000000
+            maxTokens: 384000
+            inputModalities:
+              - text
+              - image
+            reasoning:
+              defaultEffort: max
+              efforts:
+                - id: off
+                  name: Off
+                - id: high
+                  name: High
+                - id: max
+                  name: Max

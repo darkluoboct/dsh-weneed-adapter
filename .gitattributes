@@ -1,0 +1,17 @@
+# 统一用 LF，避免 Windows 提交带出 CRLF 噪音
+* text=auto eol=lf
+
+*.js    text eol=lf
+*.mjs   text eol=lf
+*.json  text eol=lf
+*.yml   text eol=lf
+*.yaml  text eol=lf
+*.md    text eol=lf
+
+# PowerShell 脚本保持 CRLF
+*.ps1   text eol=crlf
+*.bat   text eol=crlf
+
+# 二进制
+*.png   binary
+*.ico   binary

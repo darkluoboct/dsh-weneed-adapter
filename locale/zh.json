@@ -1,0 +1,7 @@
+{
+  "meta": {
+    "title": "WeNeed 适配器",
+    "description": "新增一个委托型模型 provider：在每个新请求前插入 WeNeed 语域 seed，让模型保持在「We need / Need / We should」的集体规划语态，而不是滑回「Let me」。不启进程、不占端口。",
+    "detail": "docs/DETAIL.md"
+  }
+}
