@@ -4,6 +4,33 @@
   "description": "Inject a WeNeed register seed into DSH model requests by registering a delegating LLM adapter.",
   "type": "module",
   "license": "MIT",
+  "author": "darkluobo-game",
+  "keywords": [
+    "dsh",
+    "deepseek-harness",
+    "deepseek",
+    "llm",
+    "plugin",
+    "adapter",
+    "prompt",
+    "weneed",
+    "register"
+  ],
+  "homepage": "https://github.com/darkluoboct/dsh-weneed-adapter#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/darkluoboct/dsh-weneed-adapter.git"
+  },
+  "bugs": {
+    "url": "https://github.com/darkluoboct/dsh-weneed-adapter/issues"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org",
+    "access": "public"
+  },
   "exports": {
     ".": "./index.js",
     "./client": "./client.js",
@@ -22,7 +49,9 @@
     "selftest.mjs",
     "integration.mjs",
     "list-channels.mjs",
-    "README.md"
+    "README.md",
+    "README.en.md",
+    "LICENSE"
   ],
   "dsh": {
     "bundle": {

@@ -5,6 +5,8 @@ No proxy process, no port, no config surgery — it starts and stops with DSH.
 
 让模型保持在 `We need / Need / We should` 的集体规划语态，而不是滑回 `Let me / The user wants me to`。
 
+[English](README.en.md)
+
 ## 安装
 
 插件以 **bundle** 形式挂进 DSH。四步，全程不碰 DSH 源码。
