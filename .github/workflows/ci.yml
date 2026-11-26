@@ -25,12 +25,15 @@ jobs:
           for f in index.js client.js channels.js transport.js; do
             node --check "$f"
           done
-          for f in selftest.mjs integration.mjs list-channels.mjs; do
+          for f in selftest.mjs client-smoke.mjs integration.mjs list-channels.mjs; do
             node --check "$f"
           done
 
       - name: Structural self-test (offline)
         run: node selftest.mjs
+
+      - name: Browser half smoke test (offline)
+        run: node client-smoke.mjs
 
       - name: Channel inventory
         run: node list-channels.mjs

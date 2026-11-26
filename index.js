@@ -592,6 +592,10 @@ const FIELD_NODES = {
     type: 'string',
     meta: { default: '', description: '委托模式：把请求转交给这个已注册的 provider（与 channel 二选一）' },
   },
+  baseURL: {
+    type: 'string',
+    meta: { default: '', description: '自定义渠道的 baseURL；channel 选 custom 时填这里' },
+  },
 };
 
 /*
@@ -616,8 +620,9 @@ const CONFIG_REFS = {
   8: {
     type: 'object',
     meta: { default: {} },
-    dict: { channel: 1, mode: 2, apiKeyEnv: 3, displayName: 4, debug: 5, auditPath: 6, sourceProvider: 7 },
+    dict: { channel: 1, mode: 2, apiKeyEnv: 3, displayName: 4, debug: 5, auditPath: 6, sourceProvider: 7, baseURL: 9 },
   },
+  9: { type: 'string', meta: { default: '', description: '自定义渠道的 baseURL；channel 选 custom 时填这里' } },
 };
 
 const CONFIG_SCHEMA = { uid: 8, refs: CONFIG_REFS };

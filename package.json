@@ -1,6 +1,6 @@
 {
   "name": "dsh-weneed-adapter",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Inject a WeNeed register seed into DSH model requests by registering a delegating LLM adapter.",
   "type": "module",
   "license": "MIT",
@@ -47,6 +47,7 @@
     "docs",
     "icon.svg",
     "selftest.mjs",
+    "client-smoke.mjs",
     "integration.mjs",
     "list-channels.mjs",
     "README.md",

@@ -94,6 +94,8 @@ and acts as the rollback switch.
 | **A — built-in channel** (recommended) | `channel: opencode-go` | The plugin issues the HTTP request itself. You supply a channel plus a key; a matching provider inside DSH is optional. |
 | **B — delegate** | `sourceProvider: opencode-go` | Hands the request to a provider already registered in DSH. Use it when another plugin already owns that channel. |
 
+Both wirings switch from the `Wiring` control on the settings page; editing `cordis.patch.yml` by hand is an equivalent entry point.
+
 ## Built-in channels
 
 ```bash
@@ -130,16 +132,19 @@ The plugin ships a browser half registered into the `plugins.row.config` slot.
 
 **Settings → Plugins → `WeNeed 适配器` → Configure**
 
-| field | control | notes |
+| block | control | notes |
 | --- | --- | --- |
-| `channel` | dropdown (16 channels) | switch channels here |
-| `mode` | `always` / `off` | off = pure passthrough |
-| `apiKeyEnv` | text | blank means the channel preset |
-| `displayName` | text | group name in the model picker |
-| `debug` | toggle | one log line per request |
+| header | status dot | green = writable · amber = unsaved changes · red = save failed · grey = unavailable |
+| Wiring | segmented | `Built-in channel` / `Delegate provider`; both wirings are configurable from the page |
+| Channel | grouped dropdown | grouped as Verified / Public compatible endpoints / Custom; the channel's own address shows beneath |
+| Base URL | text | appears only when the channel ships no address (`custom`, `commandcode`); required before saving |
+| Key variable | text | placeholder follows the channel, e.g. `DEEPSEEK_API_KEY` for `deepseek` |
+| Source provider | text | replaces the whole channel block in delegate mode; use an id from `ctx.llm.listProviders()` |
+| Injection mode | segmented | `Inject seed` / `Pass through`; during passthrough the channel block dims and says so |
+| Display name | text | live "Model picker will show: …" preview underneath |
+| Debug log | toggle | one injection log line per request |
 
-Saving writes straight through `form.mutate([{op:'set', path:['channel'], value:'deepseek'}], revision)`,
-so no restart is needed.
+Saving writes straight through `form.mutate(ops, revision)` and takes effect right away. Edits are tracked and reversible. A failure distinguishes a concurrent revision conflict (refresh, then retry) from a generic write error (check the host log).
 
 ## Minimal config
 
@@ -173,6 +178,7 @@ preset supplies the variable name.
 
 ```bash
 node selftest.mjs        # offline, 9 structural assertions
+node client-smoke.mjs    # offline, 13 render assertions for the browser half
 node integration.mjs     # live gateway, 6 scenarios, needs a real key
 node list-channels.mjs   # channel inventory
 node --check index.js    # syntax

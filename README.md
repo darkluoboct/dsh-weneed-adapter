@@ -74,6 +74,8 @@ pnpm install
 | **A 内置渠道**（推荐） | `channel: opencode-go` | 插件自己发请求。玩家只填渠道 + 密钥，**不需要 DSH 里已有对应 provider**。 |
 | **B 委托** | `sourceProvider: opencode-go` | 把请求转交给 DSH 里已注册的 provider。适合该渠道已由别的插件配好的情况。 |
 
+两种模式都能在设置页的「工作方式」里一键切换，手改 `cordis.patch.yml` 是另一条等价入口。
+
 ## 内置渠道
 
 ```powershell
@@ -109,18 +111,23 @@ node list-channels.mjs 国内      # 按关键词过滤
 
 **入口：设置 → 插件 → `WeNeed 适配器` → 「配置」**
 
-| 字段 | 控件 | 说明 |
+页面自上而下：
+
+| 区块 | 控件 | 说明 |
 | --- | --- | --- |
-| `channel` | 下拉（16 个渠道） | 换渠道就选这个 |
-| `mode` | `always` / `off` | off = 纯透传，回滚开关 |
-| `apiKeyEnv` | 文本 | 留空用渠道默认的密钥变量名 |
-| `displayName` | 文本 | 模型选择器里的分组名 |
-| `debug` | 开关 | 每条请求打一行日志 |
+| 标题行 | 状态点 | 绿=可写 · 黄=有未保存改动 · 红=保存失败 · 灰=不可用 |
+| 工作方式 | 分段按钮 | `内置渠道` / `委托 provider`，两种接法都能在页面上配完 |
+| 渠道 | 分组下拉 | 分「已实测 / 公开兼容端点 / 自定义」三组，选中后下方显示它自带的地址 |
+| Base URL | 文本框 | 只在渠道自带地址为空时出现（`custom`、`commandcode`），空着存不下去 |
+| 密钥变量名 | 文本框 | placeholder 跟着渠道走：选 `deepseek` 就提示 `DEEPSEEK_API_KEY` |
+| 源 provider | 文本框 | 委托模式下顶替整个渠道区，填 `ctx.llm.listProviders()` 里的 id |
+| 注入模式 | 分段按钮 | `注入 seed` / `纯透传`；透传时渠道区降透明度，提示当前暂停生效 |
+| 显示名 | 文本框 | 下方实时预览「模型选择器将显示：…」 |
+| 调试日志 | 开关 | 每条请求打一行注入日志 |
 
-保存通过 `form.mutate([{op:'set', path:['channel'], value:'deepseek'}], revision)` 直写 Host 配置，
-不需要重启。
+保存走 `form.mutate(ops, revision)` 直写 Host 配置，改完即生效。改动可感知，按「撤销」回到已保存状态。保存失败分两种提示：配置刚被别处改过（刷新后重试），或一般写失败（看 Host 日志）。
 
-> 如果那一行只有「启用/禁用」没有「配置」，说明浏览器半边没被加载——刷新一次页面即可。
+> 那一行只显示「启用/禁用」时，说明浏览器半边还没加载——刷新一次页面。
 
 ## 最小配置（也可以直接改文件）
 
@@ -153,6 +160,7 @@ node list-channels.mjs 国内      # 按关键词过滤
 
 ```powershell
 node selftest.mjs        # 不出网，9 条结构断言
+node client-smoke.mjs    # 不出网，浏览器半边渲染 13 条断言
 node integration.mjs     # 真机打网关，6 个场景
 node list-channels.mjs   # 渠道清单
 node --check index.js    # 语法
